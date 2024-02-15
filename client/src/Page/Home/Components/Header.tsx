@@ -21,6 +21,7 @@ export const Header: React.FC = memo(() => {
   };
 
   useEffect(() => {
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
@@ -29,7 +30,7 @@ export const Header: React.FC = memo(() => {
   }, []);
 
   return (
-    <header className="sticky left-0 top-0 border-b-[1px] border-b-slate-900/10">
+    <header className="sticky left-0 top-0 border-b-[1px] border-b-slate-900/10 z-50">
       <div className="flex h-[66px] items-center bg-white px-6">
         <div className="flex items-center gap-3">
           <div className="block cursor-pointer text-lg text-slate-900 transition-all duration-300 hover:text-slate-700 md:hidden">
