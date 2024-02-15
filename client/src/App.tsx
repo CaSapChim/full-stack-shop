@@ -1,12 +1,19 @@
+import { BrowserRouter as Router } from "react-router-dom";
+import { Header, Footer } from "./Page/Home/root";
+import { Navigation } from "./Navigation";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-library.add(fas);
+library.add(faMagnifyingGlass)
 function App() {
   return (
-    <>
-      <div className="flex text-3xl font-bold"></div>
-    </>
+    <div className="w-full min-h-screen">
+      <Router>
+        <Header/>
+        <Navigation/>
+        <Footer/>
+      </Router>
+    </div>
   );
 }
 
