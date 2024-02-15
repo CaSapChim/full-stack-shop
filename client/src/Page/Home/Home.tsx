@@ -1,18 +1,7 @@
-import { Header, Footer } from "./root"
-
 export const Home = () => {
-    return (
-        <>
-            Nothing
-            Nothing
-            Nothing
-            Nothing
-            Nothing
-            Nothing
-            Nothing
-            Nothing
-            Nothing
-
-        </>
-    )
-}
+  return (
+    <>
+      <div className="h-[1000px]"></div>
+    </>
+  );
+};

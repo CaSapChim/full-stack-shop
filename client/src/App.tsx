@@ -8,12 +8,18 @@ import { Sidebar } from "./Sidebar";
 library.add(faMagnifyingGlass);
 function App() {
   return (
-    <div className="relative min-h-screen w-full">
-      <Sidebar/>
+    <div className="font-inter min-h-screen w-full overflow-hidden">
       <Router>
         <Header />
-        <Navigation />
-        <Footer />
+        <div className="flex">
+          <Sidebar />
+          <div className="flex-1 overflow-y-auto max-w-6xl mx-auto">
+            <div className="px-6">
+              <Navigation />
+            </div>
+            <Footer />
+          </div>
+        </div>
       </Router>
     </div>
   );

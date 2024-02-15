@@ -1,7 +1,5 @@
 export const Sidebar = () => {
   return (
-    <aside className="w-32 min-h-screen bg-slate-50 mr-4 fixed left-0 top-16 p-4">
-      
-    </aside>
+    <aside className="min-h-screen w-32 translate-x-[-100%] bg-slate-50 p-4 md:translate-x-0"></aside>
   );
 };
