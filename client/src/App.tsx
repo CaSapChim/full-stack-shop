@@ -4,14 +4,14 @@ import { Navigation } from "./Navigation";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faMagnifyingGlass)
+library.add(faMagnifyingGlass);
 function App() {
   return (
-    <div className="w-full min-h-screen">
+    <div className="font-inter min-h-screen h-[1000vh] w-full">
       <Router>
-        <Header/>
-        <Navigation/>
-        <Footer/>
+        <Header />
+        <Navigation />
+        <Footer />
       </Router>
     </div>
   );

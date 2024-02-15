@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.tippy-arrow {
+  color: #0f172a;
+}
+.tippy-box {
+  background-color: #0f172a;
+  font-family: 'Inter' sans-serif;
+}
