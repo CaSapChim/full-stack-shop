@@ -5,15 +5,15 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Sidebar } from "./Sidebar";
 
-library.add(faMagnifyingGlass)
+library.add(faMagnifyingGlass);
 function App() {
   return (
     <div className="relative min-h-screen w-full">
       <Sidebar/>
       <Router>
-        <Header/>
-        <Navigation/>
-        <Footer/>
+        <Header />
+        <Navigation />
+        <Footer />
       </Router>
     </div>
   );
