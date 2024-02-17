@@ -1,27 +1,29 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import { Header, Footer } from "./Page/Home/root";
-import { Navigation } from "./Navigation";
-import { Sidebar } from "./Sidebar";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faMagnifyingGlass, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DefaultLayout from "./components/layout/DefaultLayout";
+import { publicRoutes } from "./router/router";
 
-library.add(faMagnifyingGlass, faHouse);
 function App() {
   return (
-    <div className="max-h-dvh w-full overflow-hidden font-inter">
-      <Router>
-        <Header />
-        <div className="flex">
-          <Sidebar />
-          <div className="h-dvh  flex-1 overflow-y-scroll">
-            <div className="mx-auto max-w-6xl px-5">
-              <Navigation />
-              <Footer />
-            </div>
-          </div>
-        </div>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        {publicRoutes.map((route, index) => {
+          const Page = route.component;
+          const Layout = route.layout || DefaultLayout;
+
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Layout>
+                  <Page />
+                </Layout>
+              }
+            />
+          );
+        })}
+      </Routes>
+    </Router>
   );
 }
 
