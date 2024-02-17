@@ -1,8 +1,8 @@
-import DefaultLayout from "../components/layout/DefaultLayout";
-import { Home } from "../components/page/Home";
-import { Products } from "../components/page/Products";
-import { Support } from "../components/page/Support";
-import { BonKoBon } from "../components/page/404";
+import DefaultLayout from "../layout/DefaultLayout";
+import { Home } from "../page/Home";
+import { Products } from "../page/Products";
+import { Support } from "../page/Support";
+import { BonKoBon } from "../page/404";
 
 export const publicRoutes = [
   { path: "/", component: Home, layout: DefaultLayout },
