@@ -99,18 +99,20 @@ export const Header: React.FC = memo(() => {
               </kbd>
             </div>
             <div className="flex items-center border-l-[1px] border-l-slate-900/10 pl-5  text-sm font-semibold">
-              <a
+              <Link 
+                to="/auth/reg"
                 className="text-slate-900 transition-all duration-300 hover:text-slate-700"
-                href=""
               >
                 Đăng Ký
-              </a>
-              <a
+              
+              </Link>
+              <Link
+                to="/auth/login"
                 className="ml-4 rounded-lg bg-slate-900 px-4 py-2.5 text-white transition-all duration-300 hover:bg-slate-700"
-                href=""
               >
                 <FontAwesomeIcon icon={faRightToBracket} />
-              </a>
+              
+              </Link>
             </div>
           </div>
         </div>
