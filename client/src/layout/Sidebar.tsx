@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
   faQuestionCircle,
   faBox,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Sidebar = () => {
   const items = [
@@ -23,6 +23,13 @@ export const Sidebar = () => {
   ];
 
   const [activeLink, setActiveLink] = useState("Home");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const linkWebsite = location.pathname.split("/")[1].toLowerCase();
+    setActiveLink(linkWebsite || "home");
+  }, [location]);
 
   return (
     <aside className="absolute h-full w-24 -translate-x-full md:static md:translate-x-0">
