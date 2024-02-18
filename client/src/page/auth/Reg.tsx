@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Reg = () => {
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center rounded-sm bg-white px-6 py-10 sm:bg-transparent lg:px-8">
+    <div className="flex min-h-full flex-1 flex-col justify-center rounded-sm bg-white px-6 py-6 sm:bg-transparent lg:px-8">
       <div className="rounded-lg bg-white py-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-slate-900">

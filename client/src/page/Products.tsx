@@ -7,7 +7,7 @@ import {
   faCrosshairs,
   faPills,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Img from "../components/Img";
 
 interface ProductCard {
@@ -24,6 +24,10 @@ interface Category {
 }
 
 export const Products = () => {
+  const [activeLinkIndex, setActiveLinkIndex] = useState<number>(0);
+  const [selectedItem, setSelectedItem] = useState<Category | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   const products: ProductCard[] = [
     {
       name: "Loli tóc xanh",
@@ -75,22 +79,16 @@ export const Products = () => {
     { name: "Blox fruits", icon: <FontAwesomeIcon icon={faStar} /> },
   ];
 
-  const [activeLink, setActiveLink] = useState<string>("Loli");
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Category | null>(null);
-
-  useEffect(() => {
-    const defaultItem = categories.find((cata) => cata.name === activeLink);
-    setSelectedItem(defaultItem);
-  }, [activeLink, categories]);
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    if (!selectedItem) {
+      setSelectedItem(categories[0]);
+    }
   };
 
-  const handleItemClick = (item: Category) => {
+  const handleItemClick = (index: number, item: Category) => {
     setSelectedItem(item);
-    setActiveLink(item.name);
+    setActiveLinkIndex(index);
     setIsOpen(false);
   };
 
@@ -102,78 +100,74 @@ export const Products = () => {
             {categories.map((cata, index) => (
               <li
                 key={index}
-                className="w-56 cursor-pointer border-r-[1px] border-slate-900/10 text-slate-700 transition-all duration-300 hover:bg-slate-50 hover:text-slate-900"
+                className={`w-56 cursor-pointer border-r-[1px] border-slate-900/10 text-slate-700 transition-colors duration-300 hover:bg-slate-50 hover:text-slate-900 ${activeLinkIndex === index ? "border-b-2 border-b-cyan-900 text-slate-900" : ""}`}
+                onClick={() => handleItemClick(index, cata)}
               >
-                <div
-                  className={` flex items-center justify-center gap-2 py-2 ${activeLink.toLowerCase() === cata.name.toLowerCase() ? "text-slate- border-b-2 border-cyan-900" : ""}`}
-                  onClick={() => setActiveLink(cata.name)}
-                >
+                <div className="flex items-center justify-center gap-2 py-2">
                   <span>{cata.icon}</span> <span>{cata.name}</span>
                 </div>
               </li>
             ))}
           </ul>
         </nav>
-        <div>
-          <div className="inline-block text-left lg:hidden">
-            <div>
-              <span className="rounded-md shadow-sm">
-                <button
-                  type="button"
-                  className="inline-flex w-56 justify-center rounded-md border-[1px] border-slate-900/10  bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
-                  id="options-menu"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  onClick={toggleMenu}
-                >
-                  {selectedItem ? (
-                    <div className="flex items-center gap-3">
-                      <span>{selectedItem.icon}</span>
-                      <span>{selectedItem.name}</span>
-                    </div>
-                  ) : (
-                    "Select an item"
-                  )}
-                </button>
-              </span>
-              {isOpen && (
-                <div
-                  className="relative z-20 mt-2 w-56 origin-top-right rounded-md border-[1px] border-slate-900/10 bg-white shadow-lg"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <div className="py-1" role="none">
-                    {categories.map((item, index) => (
-                      <button
-                        key={index}
-                        className={`flex w-full gap-3 px-6 py-2 text-start text-sm text-slate-700 hover:bg-gray-100 hover:text-slate-900 ${activeLink.toLowerCase() === item.name.toLowerCase() ? "text-cyan-900" : ""}`}
-                        role="menuitem"
-                        onClick={() => handleItemClick(item)}
-                      >
-                        <span>{item.icon}</span> <span>{item.name}</span>
-                      </button>
-                    ))}
+        <div className="inline-block text-left lg:hidden">
+          <div>
+            <span className="rounded-md shadow-sm">
+              <button
+                type="button"
+                className="inline-flex w-56 justify-center rounded-md border-[1px] border-slate-900/10 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                onClick={toggleMenu}
+              >
+                {selectedItem ? (
+                  <div className="flex items-center gap-3">
+                    <span>{selectedItem.icon}</span>
+                    <span>{selectedItem.name}</span>
                   </div>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <span>{categories[0].icon}</span>
+                    <span>{categories[0].name}</span>
+                  </div>
+                )}
+              </button>
+            </span>
+            {isOpen && (
+              <div
+                className="relative z-20 mt-2 w-56 origin-top-right rounded-md border-[1px] border-slate-900/10 bg-white shadow-lg"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="options-menu"
+              >
+                <div className="py-1" role="none">
+                  {categories.map((item, index) => (
+                    <button
+                      key={index}
+                      className={`flex w-full gap-3 px-6 py-2 text-start text-sm text-slate-700 hover:bg-gray-100 hover:text-slate-900 ${activeLinkIndex === index ? "text-cyan-900" : ""}`}
+                      role="menuitem"
+                      onClick={() => handleItemClick(index, item)}
+                    >
+                      <span>{item.icon}</span> <span>{item.name}</span>
+                    </button>
+                  ))}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      <div className="mt-4 grid w-full grid-cols-2  gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="mt-4 grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products.map((product, index) => (
           <div
             key={index}
             className="h-full w-full rounded-md border-[1px] border-slate-900/10 bg-white p-5"
           >
             <div>
-              <div className=" h-40 overflow-hidden rounded-md bg-slate-200">
+              <div className="h-40 overflow-hidden rounded-md bg-slate-200">
                 <Img
                   src={product.imageUrl}
                   className="size-full object-cover"
                   alt={product.name}
-                ></Img>
+                />
               </div>
               <div>
                 <h3 className="mt-3 w-full truncate font-semibold text-slate-900">
