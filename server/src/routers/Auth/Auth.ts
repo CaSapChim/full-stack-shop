@@ -10,7 +10,7 @@ const response = {
 
 loginRouter.get('/listuser', async (req, res) => {
      response.data = await userModel.find();
-     res.send(response);
+     res.status(200).json(response);
 });
 
 loginRouter.get('/finduser/:id', async (req, res) => {
@@ -21,7 +21,7 @@ loginRouter.get('/finduser/:id', async (req, res) => {
                message: `The ${userId} was not in storage.`,
                tips: `use /createuser instead to create the data!`,
           }
-          res.status(404).send(response);
+          res.status(404).json(response);
      }
 
 })
