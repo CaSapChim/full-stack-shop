@@ -8,11 +8,9 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       <div className="flex">
         <Sidebar />
-        <div className="h-dvh flex-1 overflow-y-scroll bg-slate-50">
-          <div className="mx-auto max-w-6xl px-5 ">
-            {children}
-            <Footer />
-          </div>
+        <div className="h-dvh flex-1 overflow-y-scroll border-l-[1px] border-slate-900/10 bg-cyan-50">
+          <div className="mx-auto max-w-6xl p-5 ">{children}</div>
+          <Footer />
         </div>
       </div>
     </div>

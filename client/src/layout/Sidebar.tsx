@@ -33,7 +33,7 @@ export const Sidebar = () => {
               <Link to={i.link}>
                 <div
                   className={`
-                  flex size-[72px] flex-col items-center justify-center rounded-xl duration-300 hover:bg-slate-50 
+                  flex size-[72px] w-full flex-col items-center justify-center rounded-xl duration-300 hover:bg-slate-50 
                       ${activeLink.toLocaleLowerCase() === i.name.toLowerCase() ? "bg-slate-100" : ""}
                     `}
                   onClick={() => setActiveLink(i.name)}

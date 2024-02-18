@@ -2,8 +2,8 @@ import { memo } from "react";
 
 export const Footer = memo(() => {
   return (
-    <footer className="w-full">
-      <div className="px-6">
+    <footer className="w-full bg-white">
+      <div className="px-5">
         <div className="border-t-[1px] border-t-slate-900/10 py-5"></div>
         <div className="border-t-[1px] border-t-slate-900/10 py-6">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
