@@ -1,8 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import {
+  faCartShopping,
+  faStar,
+  faHeart,
+  faVideo,
+  faCrosshairs,
+  faPills,
+} from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
 import Img from "../components/Img";
-interface productsCard {
+
+interface ProductCard {
   name: string;
   price: number;
   desc: string;
@@ -10,8 +18,13 @@ interface productsCard {
   sale: number | null;
 }
 
+interface Category {
+  name: string;
+  icon: JSX.Element;
+}
+
 export const Products = () => {
-  const products: productsCard[] = [
+  const products: ProductCard[] = [
     {
       name: "Loli tóc xanh",
       desc: "Một bé loli cực dễ thương",
@@ -49,62 +62,134 @@ export const Products = () => {
       desc: "Nhìn là nungws",
       price: 200000000,
       imageUrl:
-        "https://cdn.discordappcom/attachments/1186163102417420379/1208060660894924810/110938522_p0_master1200.jpg?ex=65e1e92a&is=65cf742a&hm=d2f3df4e7ffb05ce99329cfbada0aaea45d81cf124e14845ae7228795ab8ad8f&",
+        "https://cdn.discordapp.com/attachments/1186163102417420379/1208060660894924810/110938522_p0_master1200.jpg?ex=65e1e92a&is=65cf742a&hm=d2f3df4e7ffb05ce99329cfbada0aaea45d81cf124e14845ae7228795ab8ad8f&",
       sale: null,
     },
   ];
-  const catas = [
-    "Loli",
-    "Bột màu trắng",
-    "Tool sơn súng",
-    "Link không che",
-    "Blox fruits",
+
+  const categories: Category[] = [
+    { name: "Loli", icon: <FontAwesomeIcon icon={faHeart} /> },
+    { name: "Bột màu trắng", icon: <FontAwesomeIcon icon={faPills} /> },
+    { name: "Tool sơn súng", icon: <FontAwesomeIcon icon={faCrosshairs} /> },
+    { name: "Link không che", icon: <FontAwesomeIcon icon={faVideo} /> },
+    { name: "Blox fruits", icon: <FontAwesomeIcon icon={faStar} /> },
   ];
 
   const [activeLink, setActiveLink] = useState<string>("Loli");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Category | null>(null);
+
+  useEffect(() => {
+    const defaultItem = categories.find((cata) => cata.name === activeLink);
+    setSelectedItem(defaultItem);
+  }, [activeLink, categories]);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleItemClick = (item: Category) => {
+    setSelectedItem(item);
+    setActiveLink(item.name);
+    setIsOpen(false);
+  };
 
   return (
     <>
-      <div className="mb-6 h-10 w-full p-2">
-        <nav>
-          <ul className="flex justify-center gap-8">
-            {catas.map((cata, index) => (
-              <li key={index} className="cursor-pointer">
+      <div className="h-10 w-full">
+        <nav className="hidden overflow-hidden rounded-md border-[1px] border-slate-900/10 bg-white lg:block">
+          <ul className="flex text-sm">
+            {categories.map((cata, index) => (
+              <li
+                key={index}
+                className="w-56 cursor-pointer border-r-[1px] border-slate-900/10 text-slate-700 transition-all duration-300 hover:bg-slate-50 hover:text-slate-900"
+              >
                 <div
-                  className={`rounded-xl p-3 ${activeLink.toLowerCase() === cata.toLowerCase() ? "bg-gray-200" : ""}`}
-                  onClick={() => setActiveLink(cata)}
+                  className={` flex items-center justify-center gap-2 py-2 ${activeLink.toLowerCase() === cata.name.toLowerCase() ? "text-slate- border-b-2 border-cyan-900" : ""}`}
+                  onClick={() => setActiveLink(cata.name)}
                 >
-                  {cata}
+                  <span>{cata.icon}</span> <span>{cata.name}</span>
                 </div>
               </li>
             ))}
           </ul>
         </nav>
+        <div>
+          <div className="inline-block text-left lg:hidden">
+            <div>
+              <span className="rounded-md shadow-sm">
+                <button
+                  type="button"
+                  className="inline-flex w-56 justify-center rounded-md border-[1px] border-slate-900/10  bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                  id="options-menu"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                  onClick={toggleMenu}
+                >
+                  {selectedItem ? (
+                    <div className="flex items-center gap-3">
+                      <span>{selectedItem.icon}</span>
+                      <span>{selectedItem.name}</span>
+                    </div>
+                  ) : (
+                    "Select an item"
+                  )}
+                </button>
+              </span>
+              {isOpen && (
+                <div
+                  className="relative z-20 mt-2 w-56 origin-top-right rounded-md border-[1px] border-slate-900/10 bg-white shadow-lg"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu"
+                >
+                  <div className="py-1" role="none">
+                    {categories.map((item, index) => (
+                      <button
+                        key={index}
+                        className={`flex w-full gap-3 px-6 py-2 text-start text-sm text-slate-700 hover:bg-gray-100 hover:text-slate-900 ${activeLink.toLowerCase() === item.name.toLowerCase() ? "text-cyan-900" : ""}`}
+                        role="menuitem"
+                        onClick={() => handleItemClick(item)}
+                      >
+                        <span>{item.icon}</span> <span>{item.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="ml-9 mt-8 grid h-screen w-full grid-cols-3">
+      <div className="mt-4 grid w-full grid-cols-2  gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {products.map((product, index) => (
           <div
             key={index}
-            className="relative h-[350px] w-52 rounded-3xl p-5 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
+            className="h-full w-full rounded-md border-[1px] border-slate-900/10 bg-white p-5"
           >
-            <div className="flex w-full justify-center">
-              <Img
-                src={product.imageUrl}
-                alt=""
-                className="h-[50%] w-[50%] rounded-[20%]"
-              />
-            </div>
-            <div className="flex w-full justify-center">
-              <div className="my-2 w-2/3 border border-b-black text-center"></div>
-            </div>
-            <div className="w-full text-center">
-              <span className="font-bold">{product.name}</span>
-              <p>{product.desc}</p>
-              <p className="mt-4">{product.price.toLocaleString("us")}$</p>
-            </div>
-            <div className="absolute bottom-0 flex h-10 w-full -translate-x-5 cursor-pointer items-center justify-center gap-2 rounded-b-3xl border-t border-black">
-              <FontAwesomeIcon icon={faCartShopping} />
-              <span>MUA</span>
+            <div>
+              <div className=" h-40 overflow-hidden rounded-md bg-slate-200">
+                <Img
+                  src={product.imageUrl}
+                  className="size-full object-cover"
+                  alt={product.name}
+                ></Img>
+              </div>
+              <div>
+                <h3 className="mt-3 w-full truncate font-semibold text-slate-900">
+                  {product.name}
+                </h3>
+                <p className="mb-4 w-full truncate text-slate-600">
+                  {product.desc}
+                </p>
+                <a
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-2.5 text-white transition-all duration-300 hover:bg-slate-700"
+                  href=""
+                >
+                  <FontAwesomeIcon icon={faCartShopping} />
+                  <span className="truncate"> {product.price}$</span>
+                </a>
+              </div>
             </div>
           </div>
         ))}
